@@ -1,11 +1,11 @@
-# ApolloDevBox
+# DevBox-Foundry
 
 Development Kit for AmigaOS Cross-Compilation on Windows with VBCC.
 
 ## Quick Start
 
 ```powershell
-git clone https://github.com/user/ApolloDevBox.git MyProject
+git clone https://github.com/vbuzzano/DevBox-Foundry.git DevBox
 cd MyProject
 .\box.ps1 install
 make

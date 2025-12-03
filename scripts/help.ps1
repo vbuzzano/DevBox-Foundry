@@ -1,9 +1,9 @@
 # ==============================================================================
-# ApolloDevBox - Help Script
+# DevBox-Foundry - Help Script
 # ==============================================================================
 
 Write-Host ""
-Write-Host "ApolloDevBox - Build Commands" -ForegroundColor Cyan
+Write-Host "DevBox-Foundry - Build Commands" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Targets:" -ForegroundColor Yellow
 Write-Host "  make              Build distribution (default)" -ForegroundColor White

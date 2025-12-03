@@ -1,4 +1,4 @@
-# ApolloDevBox - Setup System Roadmap
+# DevBox-Foundry - Setup System Roadmap
 
 ## 🎯 Current Status: MVP Functional
 
@@ -49,7 +49,7 @@
 
 ### F7: Interactive install flow
 ```
-=== ApolloDevBox Setup ===
+=== DevBox-Foundry Setup ===
 
 Project name [ApolloFreeWheel]: 
 Description [FreeWheel for Vampire]: 

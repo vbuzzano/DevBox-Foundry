@@ -1,5 +1,5 @@
 #############################################################################
-# ApolloDevBox - .gitignore
+# DevBox-Foundry - .gitignore
 # Development Kit for AmigaOS Cross-Compilation
 #############################################################################
 
@@ -22,6 +22,9 @@ build/
 *.elf
 *.map
 *.sym
+
+# Tools binaries (downloaded by setup)
+tools/bin/make.exe
 
 #############################################################################
 # Distribution
