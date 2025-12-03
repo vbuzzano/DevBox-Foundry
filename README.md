@@ -1,4 +1,4 @@
-# DevBox-Foundry
+# DevBox Foundry
 
 Development Kit for AmigaOS Cross-Compilation on Windows with VBCC.
 

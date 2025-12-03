@@ -1,4 +1,4 @@
-# DevBox-Foundry - Setup System Roadmap
+# DevBox Foundry - Setup System Roadmap
 
 ## 🎯 Current Status: MVP Functional
 
