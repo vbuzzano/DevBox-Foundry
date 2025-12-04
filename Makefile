@@ -1,6 +1,7 @@
 SHELL = cmd.exe
 RELEASE ?= amiga
-MSG ?=
+msg ?=
+MSG ?= $(msg)
 
 .DEFAULT_GOAL := build
 .PHONY: 	help build clean release commit push
