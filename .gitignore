@@ -49,8 +49,8 @@ tests/install/
 #############################################################################
 # Editor / IDE
 #############################################################################
-# Visual Studio Code (root .vscode is for dev, not in templates)
-.vscode/
+# Visual Studio Code - Only ignore root .vscode (dev), not templates
+/.vscode/
 
 # Other editors
 *.swp

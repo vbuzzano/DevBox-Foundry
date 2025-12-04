@@ -1,0 +1,10 @@
+{
+    // Reduce false error noise from the C/C++ extension for Amiga headers
+    // Keep only the squiggle toggle here; include/defines now live in c_cpp_properties.json
+    "C_Cpp.errorSquiggles": "disabled",
+
+    // Load environment variables from .env file
+    "terminal.integrated.env.windows": {
+        "DOTENV_PATH": "${workspaceFolder}/.env"
+    }
+}

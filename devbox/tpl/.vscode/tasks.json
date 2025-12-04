@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "make clean",
+            "problemMatcher": []
+        },
+        {
+            "label": "Upload to Vampire",
+            "type": "shell",
+            "command": "make upload",
+            "dependsOn": "Build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Upload and Start Debug",
+            "type": "shell",
+            "command": ".\\tools\\acp\\acp.exe dist\\${env:PROGRAM_NAME} \"${env:APOLLO_V4_HOST}\" && .\\tools\\acp\\acp.exe tools\\bgdbserver\\bgdbserver \"${env:APOLLO_V4_HOST}\"",
+            "dependsOn": "Build",
+            "problemMatcher": [],
+            "detail": "Upload executable and bgdbserver to Vampire V4"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // Debug on Vampire V4 using Amiga Debug extension
+            // Requires: bartmanabyss.amiga-debug extension
+            // Requires: bgdbserver running on Vampire
+            "name": "Debug on Vampire V4",
+            "type": "amiga",
+            "request": "attach",
+            "program": "${workspaceFolder}/dist/${env:PROGRAM_NAME",
+            "serverName": "${env:APOLLO_V4_HOST}",
+            "serverPort": 2345,
+            "stopOnEntry": true
+        },
+        {
+            // Attach without stopping at entry
+            "name": "Attach to Vampire V4 (no break)",
+            "type": "amiga",
+            "request": "attach", 
+            "program": "${workspaceFolder}/dist/${env:PROGRAM_NAME}",
+            "serverName": "${env:APOLLO_V4_HOST}",
+            "serverPort": 2345,
+            "stopOnEntry": false
+        }
+    ]
+}
