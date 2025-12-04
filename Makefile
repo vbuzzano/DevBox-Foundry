@@ -18,6 +18,9 @@ clean:
 release: build
 	@pwsh -NoProfile -File scripts\release.ps1
 
+status:
+	@git status
+
 commit:
 	@pwsh -NoProfile -File scripts\commit.ps1 -Message "$(msg)"
 
