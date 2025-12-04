@@ -3,7 +3,7 @@
     AmigaDevBox - Project Bootstrap Installer
 
 .DESCRIPTION
-    Downloads and sets up a new AmigaOS development project using AmigaDevBox.
+    Downloads and sets up a new development project using AmigaDevBox.
     This script is meant to be run remotely via:
     irm https://github.com/vbuzzano/AmigaDevBox/raw/main/install.ps1 | iex
 
@@ -24,10 +24,11 @@ Write-Host ""
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
 Write-Host "            🧙 DevBox Foundry v0.1.0 🧙" -ForegroundColor White
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
+Write-Host "Welcome to AmigaDevBox cross development toolKit !" -ForegroundColor Yellow
+Write-Host "This wizard will set up your project with everything you need." -ForegroundColor Gray
 Write-Host ""
 
-# Check if git is installed
-Write-Host "Checking git installation..." -ForegroundColor Cyan
+# Check if git is installed (silent check)
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Host "❌ git is not installed" -ForegroundColor Red
     Write-Host ""
@@ -35,8 +36,6 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Host "Then run this script again after installation." -ForegroundColor Yellow
     exit 1
 }
-Write-Host "✓ git found" -ForegroundColor Green
-Write-Host ""
 
 # Get project name
 if (-not $ProjectName) {
@@ -117,4 +116,8 @@ Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "  1. Review and customize: box.config.psd1" -ForegroundColor White
 Write-Host "  2. Initialize the project: .\box.ps1 init" -ForegroundColor White
 Write-Host ""
-Write-Host "📁 You are now in: $(Get-Location)" -ForegroundColor Cyan
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
+Write-Host "       Happy coding on Amiga! 🎮" -ForegroundColor Yellow
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
+Write-Host ""
+Write-Host "📁 Project directory: $(Get-Location)" -ForegroundColor Cyan

@@ -14,7 +14,7 @@
 - **Current**: Must uninstall everything
 
 ### F3: `uninstall` cache option
-- **Expected**: `.\setup.ps1 uninstall` keeps cache, `.\setup.ps1 uninstall -Purge` removes cache
+- **Expected**: `.\box.ps1 uninstall` keeps cache, `.\box.ps1 uninstall -Purge` removes cache
 - **Current**: Always removes `.setup/cache/`
 - **Benefit**: Faster reinstall (no re-download)
 

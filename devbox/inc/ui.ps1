@@ -37,8 +37,8 @@ function Show-InstallComplete {
     Write-Host "  make                  # Build project" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "Commands:" -ForegroundColor Yellow
-    Write-Host "  .\setup.ps1 pkg list     # Show packages" -ForegroundColor Gray
-    Write-Host "  .\setup.ps1 env list     # Show environment" -ForegroundColor Gray
-    Write-Host "  .\setup.ps1 uninstall    # Uninstall setup" -ForegroundColor Gray
+    Write-Host "  .\box.ps1 pkg list     # Show packages" -ForegroundColor Gray
+    Write-Host "  .\box.ps1 env list     # Show environment" -ForegroundColor Gray
+    Write-Host "  .\box.ps1 uninstall    # Uninstall setup" -ForegroundColor Gray
     Write-Host ""
 }

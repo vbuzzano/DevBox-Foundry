@@ -9,15 +9,15 @@
     The command to execute: install, uninstall, env, pkg, help
     
 .EXAMPLE
-    .\setup.ps1                    # Install (default)
-    .\setup.ps1 install            # Install all
-    .\setup.ps1 uninstall          # Uninstall environment
-    .\setup.ps1 env list           # List environment variables
-    .\setup.ps1 env reset          # Regenerate env files
-    .\setup.ps1 env add KEY=VALUE  # Add environment variable
-    .\setup.ps1 pkg list           # List packages
-    .\setup.ps1 pkg update         # Update packages
-    .\setup.ps1 help               # Show help
+    .\box.ps1                    # Install (default)
+    .\box.ps1 install            # Install all
+    .\box.ps1 uninstall          # Uninstall environment
+    .\box.ps1 env list           # List environment variables
+    .\box.ps1 env reset          # Regenerate env files
+    .\box.ps1 env add KEY=VALUE  # Add environment variable
+    .\box.ps1 pkg list           # List packages
+    .\box.ps1 pkg update         # Update packages
+    .\box.ps1 help               # Show help
     
 .NOTES
     Author: Vincent Buzzano (ReddoC)

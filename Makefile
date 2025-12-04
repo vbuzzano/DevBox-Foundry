@@ -3,7 +3,8 @@ release ?= amiga
 msg ?=
 
 .DEFAULT_GOAL := build
-.PHONY: 	help build clean release commit push
+
+.PHONY: help build clean release commit push
 
 help:
 	@pwsh -NoProfile -File scripts\help.ps1
