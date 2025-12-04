@@ -1,53 +1,36 @@
 <#
 .SYNOPSIS
-    ApolloDevBox - Project Bootstrap Installer
-    
+    AmigaDevBox - Project Bootstrap Installer
+
 .DESCRIPTION
-    Downloads and sets up a new AmigaOS development project using ApolloDevBox.
+    Downloads and sets up a new AmigaOS development project using AmigaDevBox.
     This script is meant to be run remotely via:
-    iwr <url>/install.ps1 | iex
-    
+    irm https://github.com/vbuzzano/AmigaDevBox/raw/main/install.ps1 | iex
+
 .NOTES
     Author: Vincent Buzzano (ReddoC)
-    Date: December 3, 2025
+    Date: December 2025
     Version: 0.1.0
 #>
 
 param(
     [string]$ProjectName,
-    [string]$Description,
-    [ValidateSet("zip", "git")]
-    [string]$Method = "git"
+    [string]$Description
 )
 
 $ErrorActionPreference = "Stop"
 
-# Colors
-function Write-Title($text) { Write-Host $text -ForegroundColor Cyan }
-function Write-Success($text) { Write-Host "✅ $text" -ForegroundColor Green }
-function Write-Info($text) { Write-Host "ℹ️  $text" -ForegroundColor Yellow }
-function Write-Error($text) { Write-Host "❌ $text" -ForegroundColor Red }
-
-# Banner
-Clear-Host
 Write-Host ""
-Write-Host "  ╔═══════════════════════════════════════╗" -ForegroundColor Magenta
-Write-Host "  ║                                       ║" -ForegroundColor Magenta
-Write-Host "  ║         🧙 ApolloDevBox 🧙           ║" -ForegroundColor Magenta
-Write-Host "  ║                                       ║" -ForegroundColor Magenta
-Write-Host "  ║   Amiga Development Kit Wizard        ║" -ForegroundColor Magenta
-Write-Host "  ║                                       ║" -ForegroundColor Magenta
-Write-Host "  ╚═══════════════════════════════════════╝" -ForegroundColor Magenta
-Write-Host ""
-
-Write-Title "Let's create your Amiga project! 🎮"
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
+Write-Host "            🧙 DevBox Foundry v0.1.0 🧙" -ForegroundColor White
+Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
 Write-Host ""
 
 # Get project name
 if (-not $ProjectName) {
     $ProjectName = Read-Host "Project Name"
     if (-not $ProjectName) {
-        Write-Error "Project name is required"
+        Write-Host "❌ Project name is required" -ForegroundColor Red
         exit 1
     }
 }
@@ -57,40 +40,25 @@ if (-not $Description) {
     $Description = Read-Host "Description (optional)"
 }
 
-# Sanitize project name for filesystem
+# Sanitize project name
 $safeName = $ProjectName -replace '[<>:"/\\|?*]', '_'
 $targetDir = Join-Path (Get-Location) $safeName
 
 if (Test-Path $targetDir) {
-    Write-Error "Directory '$safeName' already exists"
+    Write-Host "❌ Directory '$safeName' already exists" -ForegroundColor Red
     exit 1
 }
 
-Write-Host ""
-Write-Info "Project: $ProjectName"
-Write-Info "Directory: $targetDir"
-Write-Info "Method: $Method"
-Write-Host ""
-
-# TODO: Implement download/clone logic
-Write-Host "⚠️  Installation not yet implemented" -ForegroundColor Yellow
-Write-Host ""
-Write-Host "This will:" -ForegroundColor Gray
-Write-Host "  1. Download/clone ApolloDevBox" -ForegroundColor Gray
-Write-Host "  2. Create project structure" -ForegroundColor Gray
-Write-Host "  3. Generate setup.config.psd1" -ForegroundColor Gray
-Write-Host "  4. Initialize project" -ForegroundColor Gray
-Write-Host ""
-
-# Placeholder: Create minimal structure
-Write-Info "Creating project directory..."
+# Create project directory
+Write-Host "Creating project '$ProjectName'..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
 
+# TODO: Download/clone AmigaDevBox system into project
+# For now: placeholder
+Write-Host "✅ Project '$ProjectName' created" -ForegroundColor Green
+
+# Change to project directory
+Set-Location $targetDir
+Write-Host "📁 Changed to $(Get-Location)" -ForegroundColor Cyan
 Write-Host ""
-Write-Success "Project '$ProjectName' created in $targetDir"
-Write-Host ""
-Write-Host "Next steps:" -ForegroundColor Cyan
-Write-Host "  1. cd $safeName" -ForegroundColor White
-Write-Host "  2. Edit setup.config.psd1 if needed" -ForegroundColor White
-Write-Host "  3. .\setup.ps1 install" -ForegroundColor White
-Write-Host ""
+Write-Host "Next: .\box.ps1 install" -ForegroundColor Yellow

@@ -69,7 +69,7 @@ try {
     if ($status) {
         Write-Host "Committing changes to $releaseName..." -ForegroundColor Yellow
         git add -A
-        git commit -m "$Message - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+        git commit -m "Release $releaseName - $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
         Write-Host "✅ Committed" -ForegroundColor Green
     }
     else {

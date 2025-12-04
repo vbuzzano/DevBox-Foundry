@@ -34,16 +34,21 @@ Write-Host "Copying templates..." -ForegroundColor Yellow
 Copy-Item -Recurse -Force "$DevBoxDir\tpl\.vscode\*" "$ReleaseDir\.vscode\"
 Copy-Item -Force "$DevBoxDir\setup.ps1" "$ReleaseDir\box.ps1"
 
-# Copy root files with tag substitution
-Write-Host "Copying root files..." -ForegroundColor Yellow
-$rootFiles = @(".gitignore", "LICENSE", "README.md")
-foreach ($file in $rootFiles) {
-    if (Test-Path $file) {
-        $content = Get-Content $file -Raw
-        $content = $content -replace '\[RELEASE_NAME\]', $ReleaseName
-        $content = $content -replace '\[RELEASE_DESCRIPTION\]', $ReleaseDescription
-        Set-Content -Path "$ReleaseDir\$file" -Value $content -Encoding UTF8 -NoNewline
+    # Copy root files with tag substitution
+    Write-Host "Copying root files..." -ForegroundColor Yellow
+    $rootFiles = @(".gitignore", "LICENSE")
+    foreach ($file in $rootFiles) {
+        if (Test-Path $file) {
+            Copy-Item -Force $file "$ReleaseDir\"
+        }
     }
-}
 
-Write-Host "✅ Amiga release configured" -ForegroundColor Green
+    # Copy README.release.md as README.md for the release
+    if (Test-Path "$DevBoxDir\tpl\README.release.md") {
+        Copy-Item -Force "$DevBoxDir\tpl\README.release.md" "$ReleaseDir\README.md"
+    }
+
+    # Copy install.ps1 to root of release (for end users to download and run)
+    if (Test-Path "$DevBoxDir\install.ps1") {
+        Copy-Item -Force "$DevBoxDir\install.ps1" "$ReleaseDir\install.ps1"
+    }Write-Host "✅ Amiga release configured" -ForegroundColor Green
