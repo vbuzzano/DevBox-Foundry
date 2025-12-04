@@ -32,6 +32,11 @@ try {
             Write-Host ".git repository restored to $RELEASE_DIR" -ForegroundColor Green
         }
 
+
+        #Clean tests install
+        Remove-Item -Recurse -Force "tests\install\*"
+
+
         Write-Host "✅ OK Clean complete" -ForegroundColor Green
     }
     else {

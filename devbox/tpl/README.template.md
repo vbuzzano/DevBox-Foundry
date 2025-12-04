@@ -1,6 +1,6 @@
-# My Amiga Project
+# {{PROJECT_NAME}}
 
-**AmigaOS development project**
+**{{PROJECT_DESCRIPTION}}**
 
 ## 🚀 Quick Start
 
@@ -15,9 +15,9 @@ make
 make upload
 ```
 
-## 📝 Configuration
+## 📝 Project Configuration
 
-Edit `.box/config.psd1` to customize packages and build settings.
+Edit `box.config.psd1` to customize packages and build settings.
 
 ## 🛠️ Available Commands
 

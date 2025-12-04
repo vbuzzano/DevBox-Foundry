@@ -68,9 +68,9 @@
         ProgramName = "MyProgram"
         
         # Default CPU target (m68000, m68020, m68040, m68080)
-        DefaultCPU  = "m68080"
+        DefaultCPU  = "m68020"
         
         # Default FPU (empty, 68020, 68040, 68080)
-        DefaultFPU  = "68080"
+        DefaultFPU  = ""
     }
 }
