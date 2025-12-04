@@ -93,9 +93,6 @@ Write-Host "  ⏳ Setting up box.ps1..." -ForegroundColor Cyan
 Copy-Item ".\.box\box.ps1" "box.ps1" -Force
 Write-Host "  ✓ Copied box.ps1 to root" -ForegroundColor Green
 
-# Copy .env.ps1 to .box/ (environment loader)
-Copy-Item ".\.box\tpl\.env.ps1" ".\.box\.env.ps1" -Force
-
 # Create .vscode directory with settings
 Write-Host "  ⏳ Creating VS Code configuration..." -ForegroundColor Cyan
 $vscodeDir = ".\.vscode"
