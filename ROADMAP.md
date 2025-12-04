@@ -9,6 +9,30 @@
 
 ## ❌ Missing Features
 
+### F0: Archive-based Distribution (PRIORITY)
+- **Expected**: Replace `git clone` with versioned `.zip` downloads from GitHub Releases
+- **Current**: Installs via `git clone` → creates nested `.box/.git` (messy, uncontrolled)
+- **Problem**: 
+  - Projects have `.box/` as Git submodule (confusing)
+  - No version selection (always latest)
+  - No rollback if version breaks project
+  - Updates non-optional
+- **Solution**:
+  - Publish releases as `AmigaDevBox-v0.1.0.zip` on GitHub Releases
+  - Installer downloads versioned zip instead of cloning
+  - `box.ps1 upgrade` command for optional updates
+  - Multiple versions can coexist (easy rollback)
+- **Implementation**:
+  1. Create GitHub Release with `.zip` artifact
+  2. Modify `install.ps1` to download zip (default: latest, allow version param)
+  3. Add `upgrade` function to `app.ps1`
+  4. Document version management
+
+### F1: Version Selection During Install
+- **Expected**: Allow user to choose AmigaDevBox version
+- **Current**: Always installs latest
+- **Prompt**: `AmigaDevBox version [latest]: v0.1.0 v0.0.9 v0.0.8`
+
 ### F2: `pkg reinstall <name>` command
 - **Expected**: Reinstall specific package by name
 - **Current**: Must uninstall everything
