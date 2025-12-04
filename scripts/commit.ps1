@@ -2,6 +2,10 @@
 # DevBox Foundry - Commit Script
 # ==============================================================================
 
+param(
+    [string]$Message
+)
+
 $ErrorActionPreference = "Stop"
 
 Write-Host "Git Commit..." -ForegroundColor Cyan
@@ -12,10 +16,11 @@ try {
         Write-Host "Changes detected:" -ForegroundColor Yellow
         Write-Host $status
         
-        $message = Read-Host "Commit message"
-        if ($message) {
+        $commitMessage = if ($Message) { $Message } else { Read-Host "Commit message" }
+        
+        if ($commitMessage) {
             git add -A
-            git commit -m $message
+            git commit -m $commitMessage
             Write-Host "✅ OK Committed" -ForegroundColor Green
         }
         else {

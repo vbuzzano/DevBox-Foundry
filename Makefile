@@ -1,5 +1,6 @@
 SHELL = cmd.exe
 RELEASE ?= amiga
+MSG ?=
 
 .DEFAULT_GOAL := build
 .PHONY: 	help build clean release commit push
@@ -17,7 +18,7 @@ release: build
 	@pwsh -NoProfile -File scripts\release.ps1
 
 commit:
-	@pwsh -NoProfile -File scripts\commit.ps1
+	@pwsh -NoProfile -File scripts\commit.ps1 -Message "$(MSG)"
 
 push:
 	@pwsh -NoProfile -File scripts\push.ps1
