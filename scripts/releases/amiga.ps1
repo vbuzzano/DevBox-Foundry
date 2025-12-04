@@ -22,33 +22,59 @@ $ReleaseName = "AmigaDevBox"
 $ReleaseDescription = "Complete Amiga OS development kit setup"
 $ReleaseRepo = "https://github.com/vbuzzano/AmigaDevBox"
 
-# Copy core DevBox system
+# Copy core DevBox system (without tools, .vscode)
 Write-Host "Copying DevBox system..." -ForegroundColor Yellow
-Copy-Item -Recurse -Force "$DevBoxDir\inc\*" "$ReleaseDir\.box\inc\"
-Copy-Item -Recurse -Force "$DevBoxDir\tpl\*" "$ReleaseDir\.box\tpl\"
-Copy-Item -Recurse -Force "$DevBoxDir\tools\*" "$ReleaseDir\.box\tools\"
-Copy-Item -Force "$DevBoxDir\config.psd1" "$ReleaseDir\.box\"
+Copy-Item -Recurse -Force "$DevBoxDir\inc\*" "$ReleaseDir\inc\"
+Copy-Item -Recurse -Force "$DevBoxDir\tpl\*" "$ReleaseDir\tpl\"
+Copy-Item -Force "$DevBoxDir\config.psd1" "$ReleaseDir\config.psd1"
 
-# Copy templates
-Write-Host "Copying templates..." -ForegroundColor Yellow
-Copy-Item -Recurse -Force "$DevBoxDir\tpl\.vscode\*" "$ReleaseDir\.vscode\"
-Copy-Item -Force "$DevBoxDir\setup.ps1" "$ReleaseDir\box.ps1"
+# Create box.ps1 wrapper script (temporary, will be replaced by install.ps1)
+Write-Host "Creating box.ps1 wrapper..." -ForegroundColor Yellow
+$wrapperContent = @'
+<#
+.SYNOPSIS
+    DevBox-Foundry bootstrap wrapper
 
-    # Copy root files with tag substitution
-    Write-Host "Copying root files..." -ForegroundColor Yellow
-    $rootFiles = @(".gitignore", "LICENSE")
-    foreach ($file in $rootFiles) {
-        if (Test-Path $file) {
-            Copy-Item -Force $file "$ReleaseDir\"
-        }
+.DESCRIPTION
+    Temporary wrapper that will be replaced by the real box.ps1 after install.ps1 runs.
+    Until then, this delegates to app.ps1 (the real DevBox script).
+#>
+
+param(
+    [string]$Command
+)
+
+if (-not (Test-Path "app.ps1")) {
+    Write-Host "ERROR: app.ps1 not found. Run: .\install.ps1" -ForegroundColor Red
+    exit 1
+}
+
+& ".\app.ps1" @args
+'@
+Set-Content -Path "$ReleaseDir\box.ps1" -Value $wrapperContent -Encoding UTF8
+
+# Copy root files
+Write-Host "Copying root files..." -ForegroundColor Yellow
+$rootFiles = @(".gitignore", "LICENSE")
+foreach ($file in $rootFiles) {
+    if (Test-Path $file) {
+        Copy-Item -Force $file "$ReleaseDir\"
     }
+}
 
-    # Copy README.release.md as README.md for the release
-    if (Test-Path "$DevBoxDir\tpl\README.release.md") {
-        Copy-Item -Force "$DevBoxDir\tpl\README.release.md" "$ReleaseDir\README.md"
-    }
+# Copy app.ps1 as app.ps1 (the real devbox script)
+if (Test-Path "$DevBoxDir\app.ps1") {
+    Copy-Item -Force "$DevBoxDir\app.ps1" "$ReleaseDir\app.ps1"
+}
 
-    # Copy install.ps1 to root of release (for end users to download and run)
-    if (Test-Path "$DevBoxDir\install.ps1") {
-        Copy-Item -Force "$DevBoxDir\install.ps1" "$ReleaseDir\install.ps1"
-    }Write-Host "✅ Amiga release configured" -ForegroundColor Green
+# Copy README.release.md as README.md for the release
+if (Test-Path "$DevBoxDir\tpl\README.release.md") {
+    Copy-Item -Force "$DevBoxDir\tpl\README.release.md" "$ReleaseDir\README.md"
+}
+
+# Copy install.ps1 to root of release
+if (Test-Path "$DevBoxDir\install.ps1") {
+    Copy-Item -Force "$DevBoxDir\install.ps1" "$ReleaseDir\install.ps1"
+}
+
+Write-Host "✅ Amiga release configured" -ForegroundColor Green

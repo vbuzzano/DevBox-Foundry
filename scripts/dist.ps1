@@ -39,12 +39,10 @@ try {
         Remove-Item -Recurse -Force $RELEASE_DIR
     }
 
-    # Create base directories
+    # Create base directories (selon la nouvelle structure)
     $dirs = @(
-        "$RELEASE_DIR\.box\inc",
-        "$RELEASE_DIR\.box\tpl",
-        "$RELEASE_DIR\.box\tools",
-        "$RELEASE_DIR\.vscode"
+        "$RELEASE_DIR\inc",
+        "$RELEASE_DIR\tpl"
     )
     $dirs | ForEach-Object { New-Item -ItemType Directory -Force -Path $_ | Out-Null }
 

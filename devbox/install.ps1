@@ -26,6 +26,18 @@ Write-Host "            🧙 DevBox Foundry v0.1.0 🧙" -ForegroundColor White
 Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkMagenta
 Write-Host ""
 
+# Check if git is installed
+Write-Host "Checking git installation..." -ForegroundColor Cyan
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Host "❌ git is not installed" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "Download git from: https://git-scm.com/download/win" -ForegroundColor Yellow
+    Write-Host "Then run this script again after installation." -ForegroundColor Yellow
+    exit 1
+}
+Write-Host "✓ git found" -ForegroundColor Green
+Write-Host ""
+
 # Get project name
 if (-not $ProjectName) {
     $ProjectName = Read-Host "Project Name"
@@ -41,7 +53,7 @@ if (-not $Description) {
 }
 
 # Sanitize project name
-$safeName = $ProjectName -replace '[<>:"/\\|?*]', '_'
+$safeName = $ProjectName -replace '[/\\()^''":\[\]]', '-'
 $targetDir = Join-Path (Get-Location) $safeName
 
 if (Test-Path $targetDir) {
@@ -49,16 +61,60 @@ if (Test-Path $targetDir) {
     exit 1
 }
 
-# Create project directory
+Write-Host ""
 Write-Host "Creating project '$ProjectName'..." -ForegroundColor Cyan
 New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
-
-# TODO: Download/clone AmigaDevBox system into project
-# For now: placeholder
-Write-Host "✅ Project '$ProjectName' created" -ForegroundColor Green
-
-# Change to project directory
 Set-Location $targetDir
-Write-Host "📁 Changed to $(Get-Location)" -ForegroundColor Cyan
+
+# Clone AmigaDevBox as .box
+Write-Host "  ⏳ Cloning AmigaDevBox repository..." -ForegroundColor Cyan
+git clone https://github.com/vbuzzano/AmigaDevBox.git .box 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ Failed to clone AmigaDevBox" -ForegroundColor Red
+    exit 1
+}
+Write-Host "  ✓ AmigaDevBox cloned to .box" -ForegroundColor Green
+
+# Generate box.config.psd1 from template
+Write-Host "  ⏳ Generating box.config.psd1..." -ForegroundColor Cyan
+$templatePath = ".\.box\tpl\setup.config.template"
+if (Test-Path $templatePath) {
+    $configContent = Get-Content $templatePath -Raw
+    # Replace template values
+    $configContent = $configContent -replace 'Name\s*=\s*"[^"]*"', "Name = `"$ProjectName`""
+    $configContent = $configContent -replace 'Description\s*=\s*"[^"]*"', "Description = `"$Description`""
+    Set-Content -Path "box.config.psd1" -Value $configContent -Encoding UTF8
+    Write-Host "  ✓ Generated box.config.psd1" -ForegroundColor Green
+} else {
+    Write-Host "  ⚠️  Template not found, creating minimal config" -ForegroundColor Yellow
+    $configContent = @"
+@{
+    Project = @{
+        Name        = "$ProjectName"
+        Description = "$Description"
+        Version     = "0.1.0"
+    }
+    Envs = @{}
+    Packages = @()
+}
+"@
+    Set-Content -Path "box.config.psd1" -Value $configContent -Encoding UTF8
+}
+
+# Copy .box/box.ps1 to root (so user can run .\box.ps1 directly)
+Write-Host "  ⏳ Setting up box.ps1..." -ForegroundColor Cyan
+if (Test-Path ".\.box\box.ps1") {
+    Copy-Item ".\.box\box.ps1" "box.ps1" -Force
+    Write-Host "  ✓ Copied box.ps1 to root" -ForegroundColor Green
+} else {
+    Write-Host "  ⚠️  .box/box.ps1 not found" -ForegroundColor Yellow
+}
+
 Write-Host ""
-Write-Host "Next: .\box.ps1 install" -ForegroundColor Yellow
+Write-Host "✅ Project '$ProjectName' created successfully!" -ForegroundColor Green
+Write-Host ""
+Write-Host "Next steps:" -ForegroundColor Yellow
+Write-Host "  1. Review and customize: box.config.psd1" -ForegroundColor White
+Write-Host "  2. Initialize the project: .\box.ps1 init" -ForegroundColor White
+Write-Host ""
+Write-Host "📁 You are now in: $(Get-Location)" -ForegroundColor Cyan
